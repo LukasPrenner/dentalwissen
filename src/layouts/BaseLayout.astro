@@ -8,6 +8,7 @@ interface Props {
 
 const { title, description = 'Unabhängige, verständliche Einordnungen rund um Zahngesundheit.' } = Astro.props;
 const currentYear = new Date().getFullYear();
+const GTM_ID = 'GTM-M9VGC8CG';
 ---
 
 <html lang="de">
@@ -18,8 +19,41 @@ const currentYear = new Date().getFullYear();
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
+
+		<script define:vars={{ GTM_ID }}>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('consent', 'default', {
+				ad_storage: 'denied',
+				ad_user_data: 'denied',
+				ad_personalization: 'denied',
+				analytics_storage: 'denied',
+			});
+
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', GTM_ID);
+		</script>
 	</head>
 	<body class="flex min-h-screen flex-col bg-white text-slate-900 antialiased">
+		<noscript>
+			<iframe
+				src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+				height="0"
+				width="0"
+				style="display:none;visibility:hidden"
+			></iframe>
+		</noscript>
+
 		<header class="border-b border-slate-100">
 			<div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
 				<a href="/" class="text-lg font-semibold tracking-tight">Dental Wissen</a>
@@ -45,6 +79,34 @@ const currentYear = new Date().getFullYear();
 			</div>
 		</footer>
 
+		<div
+			id="cookie-banner"
+			class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-slate-200 bg-white px-4 py-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] sm:px-6"
+		>
+			<div class="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<p class="text-sm text-slate-600">
+					Wir nutzen Cookies, um die Seite zu verbessern und Reichweite zu messen. Mehr dazu in unserer
+					<a href="/datenschutz" class="underline hover:text-slate-900">Datenschutzerklärung</a>.
+				</p>
+				<div class="flex shrink-0 gap-2">
+					<button
+						id="cookie-decline"
+						type="button"
+						class="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+					>
+						Ablehnen
+					</button>
+					<button
+						id="cookie-accept"
+						type="button"
+						class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+					>
+						Akzeptieren
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<script>
 			document.addEventListener('DOMContentLoaded', () => {
 				const params = new URLSearchParams(window.location.search);
@@ -54,6 +116,48 @@ const currentYear = new Date().getFullYear();
 					const url = new URL(anchor.href);
 					params.forEach((value, key) => url.searchParams.set(key, value));
 					anchor.href = url.toString();
+				});
+			});
+		</script>
+
+		<script>
+			const CONSENT_KEY = 'dw_consent';
+
+			function gtag(...args: unknown[]) {
+				(window as any).dataLayer = (window as any).dataLayer || [];
+				(window as any).dataLayer.push(args);
+			}
+
+			function applyConsent(granted: boolean) {
+				gtag('consent', 'update', {
+					ad_storage: granted ? 'granted' : 'denied',
+					ad_user_data: granted ? 'granted' : 'denied',
+					ad_personalization: granted ? 'granted' : 'denied',
+					analytics_storage: granted ? 'granted' : 'denied',
+				});
+			}
+
+			document.addEventListener('DOMContentLoaded', () => {
+				const stored = localStorage.getItem(CONSENT_KEY);
+				const banner = document.getElementById('cookie-banner');
+
+				if (stored === 'granted' || stored === 'denied') {
+					applyConsent(stored === 'granted');
+					return;
+				}
+
+				banner?.classList.remove('hidden');
+
+				document.getElementById('cookie-accept')?.addEventListener('click', () => {
+					localStorage.setItem(CONSENT_KEY, 'granted');
+					applyConsent(true);
+					banner?.classList.add('hidden');
+				});
+
+				document.getElementById('cookie-decline')?.addEventListener('click', () => {
+					localStorage.setItem(CONSENT_KEY, 'denied');
+					applyConsent(false);
+					banner?.classList.add('hidden');
 				});
 			});
 		</script>
