@@ -1,0 +1,392 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductGallery from '../components/ProductGallery.astro';
+import tubeKarton from '../assets/produkt/01-tube-karton.jpg';
+import tubeInhaltsstoffe from '../assets/produkt/02-tube-inhaltsstoffe.jpg';
+import inhaltsstoffe from '../assets/produkt/03-inhaltsstoffe.jpg';
+
+const SHOP_URL = 'https://improic.com/products/improic-zahnpasta';
+
+const gallery = [
+	{ src: tubeKarton, alt: 'IMPROIC® Zahnpasta – Tube und Faltschachtel, 75 ml' },
+	{ src: tubeInhaltsstoffe, alt: 'IMPROIC® Zahnpasta mit ihren Inhaltsstoffen' },
+	{ src: inhaltsstoffe, alt: 'Inhaltsstoffe: Mikrosilber, Fluorid, Salbei, Pfefferminze, Vitamin E und Xylit' },
+];
+
+const badges = [
+	{ title: 'Mit Mikrosilber', sub: 'Microsilver BG™' },
+	{ title: '1.400 ppm', sub: 'Fluorid' },
+	{ title: 'Ohne SLS', sub: 'mild & sanft' },
+	{ title: 'Made in', sub: 'Germany' },
+];
+
+const highlights = [
+	{
+		title: 'Pflege, die nach dem Putzen weitergeht',
+		text: 'Mikrosilber-Partikel verbleiben nach dem Putzen auf Zähnen und Zahnfleisch und geben nach und nach Silberionen ab – genau in den Stunden, in denen sich neuer Belag bildet.',
+	},
+	{
+		title: 'Bewährter Kariesschutz',
+		text: '1.400 ppm Fluorid stärken den Zahnschmelz. Xylit ergänzt die Rezeptur als zahnfreundlicher Zuckeraustauschstoff.',
+	},
+	{
+		title: 'Pflanzliche Inhaltsstoffe',
+		text: 'Salbei und Pfefferminze sorgen für ein frisches, sauberes Mundgefühl. Vitamin E und Panthenol pflegen das Zahnfleisch.',
+	},
+	{
+		title: 'Sanft im täglichen Gebrauch',
+		text: 'Ein RDA-Wert unter 70 und der Verzicht auf SLS machen die Zahnpasta schonend – auch für empfindliche Zähne und freiliegende Zahnhälse.',
+	},
+];
+
+const audiences = [
+	{ title: 'Natürliche Zähne', text: 'Gründliche Reinigung und Kariesschutz für jeden Tag.' },
+	{ title: 'Zahnfleisch', text: 'Pflegende Inhaltsstoffe für den empfindlichen Zahnfleischrand.' },
+	{ title: 'Kronen & Brücken', text: 'Sanfte Putzkörper, die Oberflächen schonen.' },
+	{ title: 'Implantate', text: 'Sorgfältige Pflege der Übergänge zum Zahnfleisch.' },
+];
+
+const ingredients = [
+	{ name: 'Mikrosilber', inci: 'Silver', text: 'Silber ist seit Langem für seine antibakteriellen Eigenschaften bekannt. Das Mikrosilber haftet nach dem Putzen an den Oberflächen und gibt Silberionen allmählich ab.' },
+	{ name: 'Fluorid', inci: 'Sodium Fluoride', text: '1.400 ppm Natriumfluorid – der am besten untersuchte Baustein zur Kariesvorbeugung.' },
+	{ name: 'Salbei', inci: 'Salvia Officinalis Leaf Oil', text: 'Traditionell in der Mundpflege geschätzt, mit angenehm würziger Frische.' },
+	{ name: 'Pfefferminze & Anethol', inci: 'Menthol, Anethole', text: 'Für ein lang anhaltend frisches Mundgefühl.' },
+	{ name: 'Vitamin E & Panthenol', inci: 'Tocopherol, Panthenol', text: 'Pflegende Inhaltsstoffe für Zahnfleisch und Mundschleimhaut.' },
+	{ name: 'Xylit', inci: 'Xylitol', text: 'Zuckeraustauschstoff, den kariesverursachende Bakterien nicht verwerten können.' },
+];
+
+const inci =
+	'Aqua, Diatomaceous Earth, Tripropylene Glycol, Sodium Peg-4 Cocamide Sulfate, Hydrated Silica, Titanium Dioxide, Peg-32, Xylitol, Hydroxyethylcellulose, Anethole, Menthol, Tocopherol, Panthenol, Silver, Salvia Officinalis Leaf Oil, Sodium Fluoride, Acid Blue 9, Cyanocobalamin, Sodium Hydroxide, Lactic Acid. Enthält 1.400 ppm Fluorid (Natriumfluorid).';
+
+const steps = [
+	{ title: 'Erbsengroße Menge', text: 'Eine erbsengroße Menge auf eine weiche bis mittlere Zahnbürste geben.' },
+	{ title: 'Zwei Minuten putzen', text: 'Zweimal täglich gründlich putzen, auch entlang des Zahnfleischrands.' },
+	{ title: 'Ausspucken statt spülen', text: 'Nur ausspucken und nicht kräftig nachspülen – so bleiben die Inhaltsstoffe länger im Mund.' },
+];
+
+const facts = [
+	['Inhalt', '75 ml'],
+	['Fluoridgehalt', '1.400 ppm (Natriumfluorid)'],
+	['Abrasivität', 'RDA < 70'],
+	['Frei von', 'SLS, Triclosan'],
+	['Herstellung', 'Made in Germany'],
+	['Entwicklung', 'IMPROIC Dental GmbH, Innsbruck'],
+];
+
+const faqs = [
+	{ q: 'Für wen ist die IMPROIC® Zahnpasta geeignet?', a: 'Für Erwachsene, die ihre Zähne und ihr Zahnfleisch gründlich und sanft pflegen möchten – egal ob mit natürlichen Zähnen, Kronen, Brücken oder Implantaten.' },
+	{ q: 'Ist die Zahnpasta für empfindliche Zähne geeignet?', a: 'Mit einem RDA-Wert unter 70 gehört sie zu den gering bis mittel abrasiven Zahnpasten und ist zudem frei von SLS. Viele Menschen mit empfindlichen Zähnen schätzen genau das.' },
+	{ q: 'Kann ich sie jeden Tag verwenden?', a: 'Ja. Die Zahnpasta ist für die tägliche Anwendung morgens und abends entwickelt.' },
+	{ q: 'Wie lange reicht eine Tube?', a: 'Bei zweimal täglicher Anwendung mit einer erbsengroßen Menge reicht eine 75-ml-Tube in der Regel rund zwei Monate.' },
+	{ q: 'Wo kann ich die Zahnpasta bestellen?', a: 'Über den offiziellen IMPROIC® Onlineshop. Dort finden Sie auch Mehrfachpakete und ein Spar-Abo.' },
+];
+---
+
+<BaseLayout
+	title="IMPROIC® Zahnpasta mit Mikrosilber – 75 ml | Dental Wissen"
+	description="IMPROIC® Zahnpasta: tägliche Pflege mit Mikrosilber, 1.400 ppm Fluorid und pflanzlichen Inhaltsstoffen – für Zähne, Zahnfleisch, Kronen und Implantate."
+>
+	<section class="mx-auto max-w-6xl px-4 pt-6 sm:px-6 sm:pt-10">
+		<nav class="text-sm text-muted" aria-label="Brotkrümelnavigation">
+			<a href="/" class="hover:text-ink">Startseite</a>
+			<span class="mx-1.5" aria-hidden="true">/</span>
+			<span class="text-ink-2">IMPROIC® Zahnpasta</span>
+		</nav>
+
+		<div class="mt-5 grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+			<ProductGallery images={gallery} />
+
+			<div class="lg:pt-2">
+				<p class="text-sm font-semibold tracking-wide text-brand-deep">IMPROIC®</p>
+				<h1 class="mt-1 font-serif text-[2rem] leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+					IMPROIC® Zahnpasta
+				</h1>
+				<p class="mt-3 text-lg leading-relaxed text-ink-2">
+					Tägliche Zahnpflege mit Mikrosilber – für Zähne, Zahnfleisch und Zahnersatz.
+				</p>
+
+				<div class="mt-6 flex items-baseline gap-3">
+					<p class="text-3xl font-semibold tracking-tight text-ink">9,90&nbsp;€</p>
+					<p class="text-sm text-muted">75 ml · 13,20&nbsp;€ / 100 ml</p>
+				</div>
+				<p class="mt-1 text-sm text-muted">inkl. MwSt., zzgl. Versand · versandkostenfrei ab 29&nbsp;€</p>
+
+				<ul class="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+					{
+						badges.map((badge) => (
+							<li class="rounded-2xl border border-line px-3 py-3 text-center">
+								<p class="text-sm font-semibold text-ink">{badge.title}</p>
+								<p class="text-xs text-muted">{badge.sub}</p>
+							</li>
+						))
+					}
+				</ul>
+
+				<a
+					href={SHOP_URL}
+					data-cta="produkt-oben"
+					data-buy-top
+					class="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 text-base font-semibold text-white transition hover:bg-brand-ink"
+				>
+					Jetzt kaufen
+					<svg viewBox="0 0 20 20" class="size-5" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				</a>
+				<p class="mt-2.5 text-center text-xs text-muted">Sie werden zum offiziellen IMPROIC® Onlineshop weitergeleitet.</p>
+
+				<ul class="mt-6 space-y-3 border-t border-line pt-6 text-sm text-ink-2">
+					<li class="flex items-center gap-3">
+						<svg viewBox="0 0 20 20" class="size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="M10 2.5 3.5 5v4.5c0 4 2.8 6.9 6.5 8 3.7-1.1 6.5-4 6.5-8V5L10 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="m7 10 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+						30 Tage Geld-zurück-Garantie
+					</li>
+					<li class="flex items-center gap-3">
+						<svg viewBox="0 0 20 20" class="size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="M2.5 6.5h10v7h-10zM12.5 9h3l2 2.5v2h-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><circle cx="6" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.6" /><circle cx="15" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.6" /></svg>
+						Mehrfachpakete ab 7,98&nbsp;€ pro Tube, versandkostenfrei
+					</li>
+					<li class="flex items-center gap-3">
+						<svg viewBox="0 0 20 20" class="size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="M4 10a6 6 0 0 1 10.5-4M16 10a6 6 0 0 1-10.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /><path d="M14.5 2.5V6H11M5.5 17.5V14H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+						Spar-Abo verfügbar – jederzeit pausierbar
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="besonders">
+		<div class="max-w-2xl">
+			<p class="text-sm font-medium text-brand-deep">Was sie besonders macht</p>
+			<h2 id="besonders" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+				Durchdacht bis ins Detail
+			</h2>
+			<p class="mt-4 text-lg leading-relaxed text-ink-2">
+				Eine gute Zahnpasta reinigt gründlich, schont den Zahnschmelz und pflegt das Zahnfleisch. IMPROIC® geht einen
+				Schritt weiter und denkt auch an die Zeit zwischen zwei Mal Putzen.
+			</p>
+		</div>
+		<div class="mt-10 grid gap-4 sm:grid-cols-2">
+			{
+				highlights.map((item, i) => (
+					<div class="rounded-3xl bg-mist p-6 sm:p-8">
+						<p class="font-serif text-lg text-brand-deep tabular-nums">0{i + 1}</p>
+						<h3 class="mt-3 text-xl font-semibold text-ink">{item.title}</h3>
+						<p class="mt-2 leading-relaxed text-ink-2">{item.text}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="mt-20 bg-brand-ink py-16 text-white sm:mt-28 sm:py-24" aria-labelledby="mikrosilber">
+		<div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-16">
+			<div>
+				<p class="text-sm font-medium text-sky-200">Das Prinzip</p>
+				<h2 id="mikrosilber" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+					Mikrosilber: Pflege, die bleibt
+				</h2>
+				<p class="mt-4 text-lg leading-relaxed text-white/80">
+					Viele Inhaltsstoffe einer Zahnpasta werden nach dem Putzen einfach ausgespuckt. Das Mikrosilber in IMPROIC®
+					ist anders: Die feinen Partikel lagern sich beim Putzen an Zähnen und Zahnfleisch an und geben von dort aus
+					nach und nach Silberionen ab.
+				</p>
+				<p class="mt-4 leading-relaxed text-white/80">
+					Verwendet wird Microsilver BG™, ein in Deutschland entwickeltes Mikrosilber.
+				</p>
+			</div>
+			<ol class="grid gap-3">
+				<li class="rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/10">
+					<p class="text-xs font-semibold tracking-wider text-sky-200 uppercase">Beim Putzen</p>
+					<p class="mt-1.5 text-white/90">Die Mikrosilber-Partikel verteilen sich auf Zahnoberflächen und Zahnfleischrand.</p>
+				</li>
+				<li class="rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/10">
+					<p class="text-xs font-semibold tracking-wider text-sky-200 uppercase">Nach dem Ausspucken</p>
+					<p class="mt-1.5 text-white/90">Ein Teil der Partikel bleibt haften, statt mit dem Schaum zu verschwinden.</p>
+				</li>
+				<li class="rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/10">
+					<p class="text-xs font-semibold tracking-wider text-sky-200 uppercase">In den Stunden danach</p>
+					<p class="mt-1.5 text-white/90">Silberionen werden allmählich abgegeben – bis zur nächsten Anwendung.</p>
+				</li>
+			</ol>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="fuer-wen">
+		<div class="max-w-2xl">
+			<p class="text-sm font-medium text-brand-deep">Für wen</p>
+			<h2 id="fuer-wen" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+				Eine Zahnpasta für alles, was zu Ihrem Lächeln gehört
+			</h2>
+		</div>
+		<div class="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
+			{
+				audiences.map((item) => (
+					<div class="rounded-3xl border border-line p-5 sm:p-6">
+						<p class="font-semibold text-ink">{item.title}</p>
+						<p class="mt-1.5 text-sm leading-relaxed text-ink-2">{item.text}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="inhaltsstoffe">
+		<div class="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+			<div class="lg:sticky lg:top-24 lg:self-start">
+				<p class="text-sm font-medium text-brand-deep">Inhaltsstoffe</p>
+				<h2 id="inhaltsstoffe" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+					Jeder Inhaltsstoff mit einer Aufgabe
+				</h2>
+				<div class="mt-6 overflow-hidden rounded-3xl ring-1 ring-line">
+					<Image src={inhaltsstoffe} alt="Die wichtigsten Inhaltsstoffe der IMPROIC® Zahnpasta" widths={[480, 800]} sizes="(min-width: 1024px) 480px, 100vw" class="aspect-square w-full object-cover" />
+				</div>
+			</div>
+			<div>
+				<ul class="divide-y divide-line border-y border-line">
+					{
+						ingredients.map((item) => (
+							<li class="py-5">
+								<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+									<p class="text-lg font-semibold text-ink">{item.name}</p>
+									<p class="text-xs text-muted">{item.inci}</p>
+								</div>
+								<p class="mt-1.5 leading-relaxed text-ink-2">{item.text}</p>
+							</li>
+						))
+					}
+				</ul>
+				<p class="mt-6 text-sm leading-relaxed text-ink-2">
+					Bewusst verzichtet wird auf Natriumlaurylsulfat (SLS) und Triclosan.
+				</p>
+				<details class="group mt-4 rounded-2xl bg-mist p-5">
+					<summary class="flex cursor-pointer list-none items-center justify-between text-sm font-medium text-ink [&::-webkit-details-marker]:hidden">
+						Alle Inhaltsstoffe (INCI)
+						<span class="transition group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-sm leading-relaxed text-ink-2">{inci}</p>
+				</details>
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="entwicklung">
+		<div class="grid gap-4 lg:grid-cols-3">
+			<div class="rounded-3xl bg-sand p-7 sm:p-9 lg:col-span-2">
+				<p class="text-sm font-medium text-brand-deep">Entwicklung</p>
+				<h2 id="entwicklung" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink">
+					Entwickelt in Innsbruck, hergestellt in Deutschland
+				</h2>
+				<p class="mt-4 leading-relaxed text-ink-2">
+					IMPROIC® wurde von der IMPROIC Dental GmbH in Innsbruck gemeinsam mit Zahnärzten, der Medizinischen
+					Universität Innsbruck und Apotheken entwickelt. Die Rezeptur wurde in Laboruntersuchungen geprüft,
+					hergestellt wird die Zahnpasta in Deutschland.
+				</p>
+			</div>
+			<div class="rounded-3xl border border-line p-7 sm:p-9">
+				<p class="text-sm font-semibold text-ink">Auf einen Blick</p>
+				<dl class="mt-4 space-y-3 text-sm">
+					{
+						facts.map(([term, value]) => (
+							<div class="flex justify-between gap-4 border-b border-line pb-3 last:border-0 last:pb-0">
+								<dt class="text-muted">{term}</dt>
+								<dd class="text-right font-medium text-ink">{value}</dd>
+							</div>
+						))
+					}
+				</dl>
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="anwendung">
+		<p class="text-sm font-medium text-brand-deep">Anwendung</p>
+		<h2 id="anwendung" class="mt-2 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+			So einfach wie immer
+		</h2>
+		<ol class="mt-10 grid gap-4 sm:grid-cols-3">
+			{
+				steps.map((step, i) => (
+					<li class="rounded-3xl bg-mist p-6">
+						<span class="grid size-9 place-items-center rounded-full bg-white text-sm font-semibold text-brand-deep ring-1 ring-line">{i + 1}</span>
+						<p class="mt-4 font-semibold text-ink">{step.title}</p>
+						<p class="mt-1.5 text-sm leading-relaxed text-ink-2">{step.text}</p>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-3xl px-4 sm:mt-28 sm:px-6" aria-labelledby="faq">
+		<h2 id="faq" class="text-center font-serif text-3xl font-semibold tracking-tight text-ink">Häufige Fragen</h2>
+		<div class="mt-8 divide-y divide-line border-y border-line">
+			{
+				faqs.map((faq) => (
+					<details class="group py-4">
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-ink [&::-webkit-details-marker]:hidden">
+							{faq.q}
+							<span class="grid size-7 shrink-0 place-items-center rounded-full bg-mist text-muted transition group-open:rotate-45">+</span>
+						</summary>
+						<p class="mt-3 pr-10 leading-relaxed text-ink-2">{faq.a}</p>
+					</details>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="mx-auto mt-20 max-w-6xl px-4 sm:mt-28 sm:px-6" aria-labelledby="kaufen">
+		<div class="grid items-center gap-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-soft via-white to-teal-soft p-6 ring-1 ring-line sm:grid-cols-[0.8fr_1.2fr] sm:p-12">
+			<Image src={tubeKarton} alt="IMPROIC® Zahnpasta" widths={[400, 700]} sizes="(min-width: 640px) 360px, 90vw" class="mx-auto aspect-square w-full max-w-xs rounded-2xl bg-white object-contain ring-1 ring-line" />
+			<div>
+				<h2 id="kaufen" class="font-serif text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">
+					Bereit für einen Wechsel?
+				</h2>
+				<p class="mt-3 text-lg leading-relaxed text-ink-2">
+					IMPROIC® Zahnpasta, 75 ml, für 9,90&nbsp;€ – mit 30 Tagen Geld-zurück-Garantie.
+				</p>
+				<a
+					href={SHOP_URL}
+					data-cta="produkt-unten"
+					class="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 text-base font-semibold text-white transition hover:bg-brand-ink sm:w-auto"
+				>
+					Jetzt kaufen
+					<svg viewBox="0 0 20 20" class="size-5" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				</a>
+				<p class="mt-3 text-xs text-muted">Bestellung über den offiziellen IMPROIC® Onlineshop.</p>
+			</div>
+		</div>
+	</section>
+
+	<div
+		data-sticky-buy
+		class="fixed inset-x-0 bottom-0 z-30 translate-y-full border-t border-line bg-white/95 px-4 py-3 backdrop-blur transition-transform duration-300 data-[visible=true]:translate-y-0 lg:hidden"
+	>
+		<div class="flex items-center gap-3">
+			<div class="min-w-0 flex-1">
+				<p class="truncate text-sm font-semibold text-ink">IMPROIC® Zahnpasta</p>
+				<p class="text-xs text-muted">9,90&nbsp;€ · 75 ml</p>
+			</div>
+			<a href={SHOP_URL} data-cta="produkt-sticky" class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white">Jetzt kaufen</a>
+		</div>
+	</div>
+</BaseLayout>
+
+<script>
+	const topButton = document.querySelector('[data-buy-top]');
+	const bottomCta = document.querySelector('[data-cta="produkt-unten"]');
+	const sticky = document.querySelector<HTMLElement>('[data-sticky-buy]');
+	if (topButton && bottomCta && sticky) {
+		let queued = false;
+		const update = () => {
+			queued = false;
+			const pastTop = topButton.getBoundingClientRect().bottom < 0;
+			const bottomInView = bottomCta.getBoundingClientRect().top < window.innerHeight;
+			sticky.dataset.visible = String(pastTop && !bottomInView);
+		};
+		const schedule = () => {
+			if (queued) return;
+			queued = true;
+			requestAnimationFrame(update);
+		};
+		window.addEventListener('scroll', schedule, { passive: true });
+		window.addEventListener('resize', schedule, { passive: true });
+		update();
+	}
+</script>

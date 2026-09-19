@@ -1,0 +1,349 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import tubeKarton from '../assets/produkt/01-tube-karton.jpg';
+
+const toc = [
+	{ id: 'mikrobiom', label: 'Der Mund als Ökosystem' },
+	{ id: 'biofilm', label: 'Wie aus Belag Biofilm wird' },
+	{ id: 'zahnfleisch', label: 'Wenn das Zahnfleisch reagiert' },
+	{ id: 'zahlen', label: 'Was die Zahlen sagen' },
+	{ id: 'zahnersatz', label: 'Kronen, Brücken & Implantate' },
+	{ id: 'vorsorge', label: 'Was im Alltag hilft' },
+	{ id: 'zahnpasta', label: 'Worauf es bei Zahnpasta ankommt' },
+];
+
+const timeline = [
+	{ time: 'Minuten', title: 'Ein Schutzfilm entsteht', text: 'Kurz nach dem Putzen legt sich ein hauchdünner Eiweißfilm aus dem Speichel auf den Zahnschmelz – das sogenannte Pellikel.' },
+	{ time: 'Wenige Stunden', title: 'Erste Bakterien docken an', text: 'Auf diesem Film siedeln sich die ersten Bakterien an. Mit bloßem Auge ist davon noch nichts zu sehen.' },
+	{ time: '1–2 Tage', title: 'Ein Biofilm organisiert sich', text: 'Weitere Bakterienarten kommen hinzu und umgeben sich mit einer schützenden Schicht. Dieser strukturierte Belag haftet deutlich fester.' },
+	{ time: 'Tage bis Wochen', title: 'Aus Belag wird Zahnstein', text: 'Bleibt der Belag liegen, können sich Mineralien aus dem Speichel einlagern. Zahnstein lässt sich nur noch in der Zahnarztpraxis entfernen.' },
+];
+
+const stats = [
+	{ value: '700+', label: 'Bakterienarten wurden in der menschlichen Mundhöhle bereits nachgewiesen.', ref: 1 },
+	{ value: '3,5 Mrd.', label: 'Menschen weltweit sind laut WHO von Erkrankungen im Mundraum betroffen.', ref: 2 },
+	{ value: '≈ 19 %', label: 'der Erwachsenen weltweit haben laut WHO eine schwere Erkrankung des Zahnhalteapparats.', ref: 2 },
+];
+
+const habits = [
+	{ title: 'Zweimal täglich, zwei Minuten', text: 'Morgens und abends gründlich putzen – mit einer weichen bis mittleren Bürste und ohne großen Druck.' },
+	{ title: 'Die Zwischenräume nicht vergessen', text: 'Zahnbürsten erreichen die Zahnzwischenräume kaum. Interdentalbürsten oder Zahnseide schließen diese Lücke.' },
+	{ title: 'Fluoridhaltige Zahnpasta', text: 'Fluorid stärkt den Zahnschmelz und gilt als der am besten untersuchte Baustein zur Kariesvorbeugung.' },
+	{ title: 'Regelmäßige Kontrolle', text: 'Ein- bis zweimal im Jahr zur Kontrolle, dazu bei Bedarf eine professionelle Zahnreinigung.' },
+	{ title: 'Zucker bewusst genießen', text: 'Häufige zuckerhaltige Snacks und Getränke geben Bakterien laufend neues Futter. Weniger oft ist besser als weniger viel.' },
+	{ title: 'Auf Signale achten', text: 'Zahnfleischbluten beim Putzen oder anhaltender Mundgeruch sind gute Gründe, die Pflege zu überprüfen und zahnärztlich nachzufragen.' },
+];
+
+const criteria = [
+	{ title: 'Fluorid', text: 'Zahnpasten für Erwachsene enthalten meist 1.000 bis 1.500 ppm Fluorid – 1.500 ppm ist in der EU der Höchstwert für frei verkäufliche Zahnpasta.' },
+	{ title: 'Sanfte Putzkörper', text: 'Der RDA-Wert beschreibt, wie abrasiv eine Zahnpasta ist. Werte unter 70 gelten als gering bis mittel – schonend für Zahnschmelz und freiliegende Zahnhälse.' },
+	{ title: 'Milde Rezeptur', text: 'Das Schaummittel Natriumlaurylsulfat (SLS) ist weit verbreitet. Wer eine empfindliche Mundschleimhaut hat, greift oft lieber zu SLS-freien Produkten.' },
+	{ title: 'Pflege über das Putzen hinaus', text: 'Neue Belagbildung beginnt schon Minuten nach dem Putzen. Interessant sind daher Inhaltsstoffe, die nach dem Ausspülen im Mund verbleiben.' },
+];
+
+const faqs = [
+	{ q: 'Wie oft sollte ich meine Zähne putzen?', a: 'Empfohlen wird zweimal täglich für etwa zwei Minuten, idealerweise ergänzt um die Reinigung der Zahnzwischenräume einmal am Tag.' },
+	{ q: 'Ist Zahnfleischbluten beim Putzen normal?', a: 'Gelegentliches Bluten ist häufig, sollte aber nicht zur Gewohnheit werden. Es ist oft ein Hinweis darauf, dass sich am Zahnfleischrand Belag angesammelt hat. Hält es länger an, lohnt sich ein Termin in der Zahnarztpraxis.' },
+	{ q: 'Soll ich nach dem Putzen mit Wasser nachspülen?', a: 'Viele Fachleute raten dazu, die Zahnpasta nur auszuspucken und nicht kräftig nachzuspülen. So bleiben Inhaltsstoffe wie Fluorid länger an den Zähnen.' },
+	{ q: 'Brauchen Kronen oder Implantate eine spezielle Pflege?', a: 'Grundsätzlich gelten dieselben Regeln wie für natürliche Zähne. Besonders wichtig sind die Übergänge zum Zahnfleisch und die Zwischenräume. Ihre Zahnarztpraxis kann Ihnen passende Hilfsmittel zeigen.' },
+];
+
+const sources = [
+	'Dewhirst FE et al. The human oral microbiome. J Bacteriol. 2010;192(19):5002–5017.',
+	'World Health Organization. Global oral health status report: towards universal health coverage for oral health by 2030. Genf: WHO; 2022.',
+	'Löe H, Theilade E, Jensen SB. Experimental gingivitis in man. J Periodontol. 1965;36:177–187.',
+];
+---
+
+<BaseLayout
+	title="Zahnpflege verstehen: Was bei Zahnpasta wirklich zählt | Dental Wissen"
+	description="Belag, Biofilm, Zahnfleisch: Was zwischen zwei Mal Putzen im Mund passiert – und worauf Sie bei der Wahl Ihrer Zahnpasta achten können."
+>
+	<article>
+		<header class="border-b border-line bg-gradient-to-b from-mist to-white">
+			<div class="mx-auto max-w-3xl px-4 pt-10 pb-12 sm:px-6 sm:pt-16">
+				<p class="text-sm font-medium text-brand-deep">Ratgeber Zahnpflege</p>
+				<h1 class="mt-3 font-serif text-[2.1rem] leading-[1.12] font-semibold tracking-tight text-ink sm:text-5xl">
+					Was zwischen zwei Mal Zähneputzen in Ihrem Mund passiert
+				</h1>
+				<p class="mt-5 text-lg leading-relaxed text-ink-2 sm:text-xl">
+					Zahnbelag bildet sich schneller, als die meisten denken – und er betrifft nicht nur die Zähne, sondern
+					auch das Zahnfleisch. Warum das so ist, was die Forschung dazu weiß und wie eine durchdachte tägliche
+					Pflege aussieht.
+				</p>
+				<div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+					<span class="font-medium text-ink-2">Redaktion Dental Wissen</span>
+					<span aria-hidden="true">·</span>
+					<span>Aktualisiert im September 2026</span>
+					<span aria-hidden="true">·</span>
+					<span>8 Min. Lesezeit</span>
+				</div>
+			</div>
+		</header>
+
+		<div class="mx-auto max-w-3xl px-4 sm:px-6">
+			<aside class="-mt-6 rounded-2xl border border-line bg-white p-5 shadow-[0_8px_30px_-16px_rgba(20,33,43,0.2)] sm:p-7">
+				<p class="text-sm font-semibold text-ink">Das Wichtigste in Kürze</p>
+				<ul class="mt-3 space-y-2.5 text-[0.975rem] leading-relaxed text-ink-2">
+					<li class="flex gap-3"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-brand"></span>Schon wenige Stunden nach dem Putzen siedeln sich wieder Bakterien auf den Zähnen an.</li>
+					<li class="flex gap-3"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-brand"></span>Bleibt Belag am Zahnfleischrand liegen, kann das Zahnfleisch darauf reagieren – oft ganz ohne Schmerzen.</li>
+					<li class="flex gap-3"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-brand"></span>Die gute Nachricht: Gründliche tägliche Pflege und regelmäßige Kontrollen machen einen großen Unterschied.</li>
+				</ul>
+			</aside>
+
+			<nav class="mt-10 rounded-2xl bg-mist p-5 sm:p-6" aria-label="Inhalt">
+				<p class="text-xs font-semibold tracking-wider text-muted uppercase">Inhalt</p>
+				<ol class="mt-3 grid gap-x-6 gap-y-2 text-[0.95rem] sm:grid-cols-2">
+					{
+						toc.map((item, i) => (
+							<li>
+								<a href={`#${item.id}`} class="flex gap-2.5 text-ink-2 hover:text-brand-deep">
+									<span class="text-muted tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+									{item.label}
+								</a>
+							</li>
+						))
+					}
+				</ol>
+			</nav>
+
+			<div class="prose mt-4">
+				<h2 id="mikrobiom">Der Mund ist ein eigenes Ökosystem</h2>
+				<p>
+					In unserem Mund leben mehr Mikroorganismen, als man vermuten würde. Forschende haben in der menschlichen
+					Mundhöhle bereits über 700 verschiedene Bakterienarten nachgewiesen<sup class="ref">1</sup>. Die meisten
+					davon sind harmlos oder sogar nützlich – sie gehören zu einem gesunden Gleichgewicht, ähnlich wie im Darm.
+				</p>
+				<p>
+					Entscheidend ist dieses Gleichgewicht. Solange es stimmt, bleiben Zähne und Zahnfleisch in der Regel
+					unauffällig. Gerät es aus der Balance – etwa, weil sich Belag über längere Zeit ungestört ansammeln kann –,
+					bekommen Bakterien die Oberhand, die Zahnschmelz und Zahnfleisch zusetzen können.
+				</p>
+
+				<h2 id="biofilm">Wie aus Belag ein Biofilm wird</h2>
+				<p>
+					Zahnbelag, in der Fachsprache Plaque, ist keine lose Schicht aus Speiseresten. Es handelt sich um eine
+					organisierte Gemeinschaft von Bakterien, die sich an der Zahnoberfläche festsetzt und sich mit einer
+					schützenden Matrix umgibt. Fachleute sprechen deshalb von einem <strong>Biofilm</strong>. Und der beginnt
+					sich schneller zu bilden, als viele denken:
+				</p>
+			</div>
+
+			<ol class="relative mt-8 space-y-6 border-l-2 border-brand-soft pl-6 sm:pl-8">
+				{
+					timeline.map((step) => (
+						<li class="relative">
+							<span class="absolute top-1.5 -left-[33px] size-4 rounded-full border-4 border-white bg-brand ring-1 ring-brand-soft sm:-left-[41px]" />
+							<p class="text-xs font-semibold tracking-wider text-brand-deep uppercase">{step.time}</p>
+							<p class="mt-1 font-semibold text-ink">{step.title}</p>
+							<p class="mt-1 leading-relaxed text-ink-2">{step.text}</p>
+						</li>
+					))
+				}
+			</ol>
+			<p class="mt-5 text-sm text-muted">Vereinfachte Darstellung. Der genaue Verlauf ist von Mensch zu Mensch verschieden.</p>
+
+			<div class="prose mt-2">
+				<p>
+					Das erklärt, warum zweimal tägliches Putzen so wichtig ist: Jede gründliche Reinigung setzt diesen Prozess
+					wieder auf Anfang. Gleichzeitig zeigt es, wo die Herausforderung liegt. Zwischen dem Putzen am Abend und
+					am Morgen liegen viele Stunden – und die Bakterien arbeiten auch nachts weiter.
+				</p>
+
+				<h2 id="zahnfleisch">Wenn das Zahnfleisch reagiert</h2>
+				<p>
+					Besonders gern setzt sich Belag dort fest, wo die Zahnbürste schwer hinkommt: am Übergang zwischen Zahn und
+					Zahnfleisch und in den Zwischenräumen. Bleibt er dort über Tage liegen, reagiert das Zahnfleisch darauf. Es
+					kann sich röten, leicht anschwellen und beim Putzen bluten. Zahnärztinnen und Zahnärzte sprechen dann von
+					einer Zahnfleischentzündung (Gingivitis).
+				</p>
+				<p>
+					Das Tückische daran: Sie tut in der Regel nicht weh. Viele bemerken sie nur an etwas Blut im Waschbecken –
+					und schenken dem keine große Beachtung. Das Ermutigende: In diesem frühen Stadium lässt sich die Situation
+					mit gründlicher Pflege meist gut wieder in den Griff bekommen.
+				</p>
+			</div>
+
+			<figure class="my-8 rounded-2xl bg-teal-soft p-6 sm:p-8">
+				<p class="text-xs font-semibold tracking-wider text-brand-ink/70 uppercase">Aus der Forschung</p>
+				<blockquote class="mt-3 font-serif text-xl leading-snug text-ink sm:text-2xl">
+					In einer bekannten Studie setzten gesunde Freiwillige die Mundhygiene aus. Innerhalb von 10 bis 21 Tagen
+					zeigten sich erste Reaktionen am Zahnfleisch – nach Wiederaufnahme der Pflege war es innerhalb etwa einer
+					Woche wieder unauffällig.
+				</blockquote>
+				<figcaption class="mt-4 text-sm text-ink-2">
+					Nach Löe, Theilade &amp; Jensen, Journal of Periodontology, 1965<sup class="ref">3</sup>
+				</figcaption>
+			</figure>
+
+			<div class="prose">
+				<p>
+					Diese klassische Untersuchung zeigt zweierlei: wie direkt das Zahnfleisch auf Belag reagiert – und wie viel
+					die tägliche Pflege bewirken kann. Wird ein gereiztes Zahnfleisch dagegen über lange Zeit nicht beachtet,
+					kann sich die Reaktion auf den gesamten Zahnhalteapparat ausweiten. Dann spricht man von Parodontitis, die
+					zahnärztlich behandelt werden sollte.
+				</p>
+
+				<h2 id="zahlen">Was die Zahlen sagen</h2>
+				<p>
+					Die Weltgesundheitsorganisation hat 2022 einen umfassenden Bericht zur Mundgesundheit veröffentlicht. Die
+					Zahlen zeigen, wie verbreitet das Thema ist – quer durch alle Altersgruppen und Länder.
+				</p>
+			</div>
+
+			<div class="mt-7 grid gap-4 sm:grid-cols-3">
+				{
+					stats.map((stat) => (
+						<div class="rounded-2xl border border-line p-5">
+							<p class="font-serif text-4xl font-semibold tracking-tight text-brand-ink">{stat.value}</p>
+							<p class="mt-2 text-sm leading-relaxed text-ink-2">
+								{stat.label}
+								<sup class="ref">{stat.ref}</sup>
+							</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="prose mt-2">
+				<p>
+					Hinter diesen Zahlen steckt eine gute Nachricht: Ein großer Teil davon hängt mit Faktoren zusammen, die
+					sich im Alltag beeinflussen lassen. Gründliche Mundpflege, regelmäßige Kontrollen und ein bewusster Umgang
+					mit Zucker und Rauchen gehören zu den wirksamsten Stellschrauben.
+				</p>
+
+				<h2 id="zahnersatz">Kronen, Brücken und Implantate: Zahnersatz will genauso gepflegt werden</h2>
+				<p>
+					Immer mehr Menschen tragen im Laufe ihres Lebens Kronen, Brücken oder Implantate. Zahnersatz selbst kann
+					zwar keine Karies bekommen – das Zahnfleisch drumherum reagiert aber genauso auf Belag wie bei natürlichen
+					Zähnen. Gerade an den Übergängen zwischen Zahnersatz und Zahnfleisch findet Belag gern Halt.
+				</p>
+				<p>
+					Für alle, die Zahnersatz tragen, gilt deshalb: Die Pflege zu Hause verdient mindestens so viel
+					Aufmerksamkeit wie bei den eigenen Zähnen. Ihre Zahnarztpraxis kann Ihnen zeigen, welche Hilfsmittel für
+					Ihre Situation am besten geeignet sind.
+				</p>
+
+				<h2 id="vorsorge">Vorsorge: Was im Alltag wirklich hilft</h2>
+				<p>
+					Die beste Vorsorge ist unspektakulär – und genau deshalb so wirkungsvoll. Diese Gewohnheiten empfehlen
+					Fachleute immer wieder:
+				</p>
+			</div>
+
+			<div class="mt-7 grid gap-3 sm:grid-cols-2">
+				{
+					habits.map((habit, i) => (
+						<div class="flex gap-4 rounded-2xl bg-mist p-5">
+							<span class="grid size-8 shrink-0 place-items-center rounded-full bg-white text-sm font-semibold text-brand-deep ring-1 ring-line">
+								{i + 1}
+							</span>
+							<div>
+								<p class="font-semibold text-ink">{habit.title}</p>
+								<p class="mt-1 text-[0.95rem] leading-relaxed text-ink-2">{habit.text}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="prose mt-2">
+				<h2 id="zahnpasta">Worauf es bei der Zahnpasta ankommt</h2>
+				<p>
+					Im Drogerieregal stehen Dutzende Zahnpasten mit unterschiedlichsten Versprechen. Wer genauer hinsehen möchte,
+					kann sich an einigen wenigen, gut nachvollziehbaren Kriterien orientieren:
+				</p>
+			</div>
+
+			<div class="mt-7 grid gap-4 sm:grid-cols-2">
+				{
+					criteria.map((item) => (
+						<div class="rounded-2xl border border-line p-5">
+							<p class="font-semibold text-ink">{item.title}</p>
+							<p class="mt-1.5 text-[0.95rem] leading-relaxed text-ink-2">{item.text}</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="prose mt-2">
+				<p>
+					Gerade der letzte Punkt wird oft unterschätzt. Die zwei Minuten Putzen sind nur ein kleiner Teil des Tages.
+					Eine Zahnpasta, deren Pflege auch danach noch wirkt, setzt genau dort an, wo sich neuer Belag bildet: in den
+					Stunden zwischen zwei Anwendungen.
+				</p>
+			</div>
+
+			<section class="mt-14 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-soft via-white to-teal-soft ring-1 ring-line" aria-labelledby="empfehlung">
+				<div class="grid items-center gap-6 p-6 sm:grid-cols-[0.9fr_1.1fr] sm:gap-8 sm:p-10">
+					<div class="rounded-2xl bg-white p-3 ring-1 ring-line">
+						<Image
+							src={tubeKarton}
+							alt="IMPROIC® Zahnpasta, Tube und Faltschachtel"
+							widths={[400, 700]}
+							sizes="(min-width: 640px) 320px, 90vw"
+							class="aspect-square w-full object-contain"
+						/>
+					</div>
+					<div>
+						<p class="inline-flex rounded-full bg-white px-3 py-1 text-xs font-semibold text-brand-deep ring-1 ring-line">
+							Unsere Empfehlung
+						</p>
+						<h2 id="empfehlung" class="mt-4 font-serif text-3xl leading-tight font-semibold tracking-tight text-ink">
+							IMPROIC® Zahnpasta
+						</h2>
+						<p class="mt-3 leading-relaxed text-ink-2">
+							Entwickelt in Innsbruck, in Zusammenarbeit mit der Medizinischen Universität Innsbruck und Apotheken.
+							Die Rezeptur verbindet bewährten Kariesschutz mit Mikrosilber und pflanzlichen Inhaltsstoffen – für die
+							tägliche Pflege von Zähnen und Zahnfleisch, ebenso wie von Kronen, Brücken und Implantaten.
+						</p>
+						<ul class="mt-5 space-y-2 text-[0.95rem] text-ink-2">
+							<li class="flex gap-2.5"><svg viewBox="0 0 20 20" class="mt-0.5 size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="m5 10.5 3.2 3L15 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Mikrosilber, das nach dem Putzen auf den Oberflächen verbleibt</li>
+							<li class="flex gap-2.5"><svg viewBox="0 0 20 20" class="mt-0.5 size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="m5 10.5 3.2 3L15 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>1.400 ppm Fluorid für den Zahnschmelz</li>
+							<li class="flex gap-2.5"><svg viewBox="0 0 20 20" class="mt-0.5 size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="m5 10.5 3.2 3L15 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Mit Salbei, Pfefferminze, Vitamin E und Xylit</li>
+							<li class="flex gap-2.5"><svg viewBox="0 0 20 20" class="mt-0.5 size-5 shrink-0 text-brand" fill="none" aria-hidden="true"><path d="m5 10.5 3.2 3L15 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Sanft: RDA unter 70, ohne SLS · Made in Germany</li>
+						</ul>
+						<a
+							href="/improic-zahnpasta"
+							data-cta="ratgeber-empfehlung"
+							class="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 text-base font-semibold text-white transition hover:bg-brand-ink sm:w-auto"
+						>
+							Jetzt kaufen
+							<svg viewBox="0 0 20 20" class="size-5" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+						</a>
+						<p class="mt-3 text-xs text-muted">Dental Wissen ist ein Informationsangebot der IMPROIC Dental GmbH.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="mt-16" aria-labelledby="faq">
+				<h2 id="faq" class="font-serif text-2xl font-semibold tracking-tight text-ink">Häufige Fragen</h2>
+				<div class="mt-5 divide-y divide-line border-y border-line">
+					{
+						faqs.map((faq) => (
+							<details class="group py-4">
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-ink [&::-webkit-details-marker]:hidden">
+									{faq.q}
+									<span class="grid size-7 shrink-0 place-items-center rounded-full bg-mist text-muted transition group-open:rotate-45">+</span>
+								</summary>
+								<p class="mt-3 pr-10 leading-relaxed text-ink-2">{faq.a}</p>
+							</details>
+						))
+					}
+				</div>
+			</section>
+
+			<footer class="mt-12 border-t border-line pt-6 text-sm text-muted">
+				<p class="font-medium text-ink-2">Quellen</p>
+				<ol class="mt-2 list-decimal space-y-1 pl-5">
+					{sources.map((source) => <li>{source}</li>)}
+				</ol>
+				<p class="mt-5">
+					Dieser Beitrag dient der allgemeinen Information und ersetzt keine persönliche Beratung durch Ihre
+					Zahnärztin oder Ihren Zahnarzt.
+				</p>
+			</footer>
+		</div>
+	</article>
+</BaseLayout>
